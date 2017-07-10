@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button getBtn;
     private TextView result;
+    private TextView result2;
     private OkHttpClient client;
     EditText codeTxt;
     Timer timer = new Timer(true);
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         result = (TextView) findViewById(R.id.result);
+        result2 = (TextView) findViewById(R.id.result2);
 //        getBtn = (Button) findViewById(R.id.getBtn);
         codeTxt = (EditText) findViewById(R.id.codeTxt);
 
@@ -59,7 +61,8 @@ public class MainActivity extends AppCompatActivity {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                getWebservice();        // do your task here
+                getWebservice();
+                getWebservice2();
             }
         }, 0, period);
 
@@ -125,5 +128,37 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void getWebservice2() {
+        final Request request = new Request.Builder().url("http://quotese.etnet.com.hk/content/mq3/wl_hkStockCollapse.php?code=700").build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        result2.setText("Failure");
+                    }
+                });
+            }
+            @Override
+            public void onResponse(Call call, final Response response) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            String Str = response.body().string();
+                            result2.setText(digestBody(Str)+" "+getTime());
+                            //Log.i("MainActivity",price);
+                        } catch (IOException ioe){
+                            result2.setText("Error during get body");
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+
 }
 
