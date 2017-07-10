@@ -3,15 +3,16 @@ package com.example.hsbcnetmobile.myapplication;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -32,26 +33,36 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         result = (TextView) findViewById(R.id.result);
-        getBtn = (Button) findViewById(R.id.getBtn);
+//        getBtn = (Button) findViewById(R.id.getBtn);
         codeTxt = (EditText) findViewById(R.id.codeTxt);
 
 
-        getBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //int code = Integer.parseInt(codeTxt.getText().toString());
-                //Log.i("MainActivity",Integer.toString(code));
-                final long period = 1000;
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        getWebservice();        // do your task here
-                    }
-                }, 0, period);
-            }
-        });
+//        getBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //int code = Integer.parseInt(codeTxt.getText().toString());
+//                //Log.i("MainActivity",Integer.toString(code));
+//                final long period = 1000;
+//                timer.schedule(new TimerTask() {
+//                    @Override
+//                    public void run() {
+//                        getWebservice();        // do your task here
+//                    }
+//                }, 0, period);
+//            }
+//        });
+
 
         client = new OkHttpClient();
+
+        final long period = 1000;
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                getWebservice();        // do your task here
+            }
+        }, 0, period);
+
     }
 
     public String digestBody(String raw){

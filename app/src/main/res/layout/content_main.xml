@@ -8,22 +8,22 @@
     tools:context="com.example.hsbcnetmobile.myapplication.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <Button
-        android:id="@+id/getBtn"
-        android:layout_width="319dp"
-        android:layout_height="42dp"
-        android:layout_marginBottom="203dp"
-        android:background="@color/Red"
-        android:text="On"
-        android:textColor="#FFFFFF"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/result"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_editor_absoluteX="33dp" />
+    <!--<Button-->
+        <!--android:id="@+id/getBtn"-->
+        <!--android:layout_width="319dp"-->
+        <!--android:layout_height="42dp"-->
+        <!--android:layout_marginBottom="203dp"-->
+        <!--android:background="@color/Red"-->
+        <!--android:text="On"-->
+        <!--android:textColor="#FFFFFF"-->
+        <!--android:textSize="14sp"-->
+        <!--app:layout_constraintBottom_toTopOf="@+id/result"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--tools:layout_constraintBottom_creator="1"-->
+        <!--tools:layout_constraintLeft_creator="1"-->
+        <!--tools:layout_constraintRight_creator="1"-->
+        <!--tools:layout_editor_absoluteX="33dp" />-->
 
 
     <TextView
@@ -45,10 +45,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="33dp"
+        android:backgroundTint="@android:color/black"
         android:ems="10"
         android:hint="Enter Code"
         android:inputType="number"
         android:textAlignment="center"
+        android:textColorHint="@android:color/black"
+        android:textColorLink="@color/headerColor"
+        android:textCursorDrawable="@android:color/black"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
