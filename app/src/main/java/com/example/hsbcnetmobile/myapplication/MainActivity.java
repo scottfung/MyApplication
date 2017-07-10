@@ -2,17 +2,16 @@ package com.example.hsbcnetmobile.myapplication;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -25,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView result;
     private OkHttpClient client;
     EditText codeTxt;
-
+    Timer timer = new Timer(true);
 
 
     @Override
@@ -37,20 +36,18 @@ public class MainActivity extends AppCompatActivity {
         codeTxt = (EditText) findViewById(R.id.codeTxt);
 
 
-
         getBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                int code = Integer.parseInt(codeTxt.getText().toString());
-//                Log.i("MainActivity",Integer.toString(code));
+                //int code = Integer.parseInt(codeTxt.getText().toString());
+                //Log.i("MainActivity",Integer.toString(code));
                 final long period = 1000;
-                new Timer().schedule(new TimerTask() {
+                timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
                         getWebservice();        // do your task here
                     }
                 }, 0, period);
-
             }
         });
 
@@ -58,8 +55,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public String digestBody(String raw){
-        int StrBeginIndex = raw.indexOf('际')+2;
-        int StrEndIndex = StrBeginIndex+4;
+        Log.i("MainActivity",String.valueOf(nthIndexOf(raw,',',23)));
+        //int StrBeginIndex = raw.indexOf('际')+2;
+        int StrBeginIndex = nthIndexOf(raw,',',23)+1;
+        int StrEndIndex = nthIndexOf(raw,',',24);
         return raw.substring(StrBeginIndex,StrEndIndex);
     }
 
@@ -70,10 +69,24 @@ public class MainActivity extends AppCompatActivity {
         return formattedDate;
     }
 
+    public static int nthIndexOf(String s, char c, int n) {
+        int i = -1;
+        while (n-- > 0) {
+            i = s.indexOf(c, i + 1);
+            if (i == -1)
+                break;
+        }
+        return i;
+    }
 
 
     private void getWebservice() {
-        final Request request = new Request.Builder().url("http://quotese.etnet.com.hk/content/mq3/wl_hkStockCollapse.php?code=354").build();
+        String rawCode = codeTxt.getText().toString();
+        if (rawCode.equals("") == true){rawCode="1";}
+        int code = Integer.parseInt(rawCode);
+        String codeURL = Integer.toString(code);
+        Log.i("MainActivity",codeURL);
+        final Request request = new Request.Builder().url("http://quotese.etnet.com.hk/content/mq3/wl_hkStockCollapse.php?code="+codeURL).build();
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
