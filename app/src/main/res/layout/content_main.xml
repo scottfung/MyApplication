@@ -57,23 +57,57 @@
 
     <EditText
         android:id="@+id/codeTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="33dp"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="105dp"
         android:backgroundTint="@android:color/black"
         android:ems="10"
-        android:hint="Enter Code"
         android:inputType="number"
         android:textAlignment="center"
-        android:textColorHint="@android:color/black"
+        android:textColorHint="#333333"
         android:textColorLink="@color/headerColor"
         android:textCursorDrawable="@android:color/black"
+        android:textSize="30sp"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintTop_creator="1" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="90dp"
+        android:background="@android:color/transparent"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Enter code"
+        android:textAlignment="center"
+        android:textColor="#333333"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+
+        android:layout_width="fill_parent"
+        android:layout_height="17dp"
+        app:srcCompat="@drawable/hsbc_logo_big"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="18dp"
+        />
 
 
 </android.support.constraint.ConstraintLayout>

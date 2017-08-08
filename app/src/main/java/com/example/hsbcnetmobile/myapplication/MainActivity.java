@@ -1,7 +1,11 @@
 package com.example.hsbcnetmobile.myapplication;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +25,25 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    /*
+    * Start Toolbar */
+
+    Toolbar toolbar;
+
+    /*
+    * End Toolbar */
+
+
+    /*
+    * Start Hamburger button*/
+
+    DrawerLayout drawerLayout;
+    ActionBarDrawerToggle actionBarDrawerToggle;
+
+    /*
+    * End Hamburger button*/
+
     private Button getBtn;
     private TextView result;
     private TextView result2;
@@ -33,6 +56,28 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        /*
+        * Toolbar */
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        /*
+        * End Toolbar */
+
+
+        /*
+        * Hamburger button*/
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        getSupportActionBar().setTitle("");
+
+        /*
+        * End Hamburger button*/
+
         result = (TextView) findViewById(R.id.result);
         result2 = (TextView) findViewById(R.id.result2);
 //        getBtn = (Button) findViewById(R.id.getBtn);
@@ -68,6 +113,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /*
+    * Hamburger button*/
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        actionBarDrawerToggle.syncState();
+    }
+
     public String digestBody(String raw){
         Log.i("MainActivity",String.valueOf(nthIndexOf(raw,',',23)));
         //int StrBeginIndex = raw.indexOf('际')+2;
@@ -96,7 +150,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void getWebservice() {
         String rawCode = codeTxt.getText().toString();
-        if (rawCode.equals("") == true){rawCode="1";}
+        if (rawCode.equals("") == true){
+            rawCode="354";
+        }
         int code = Integer.parseInt(rawCode);
         String codeURL = Integer.toString(code);
         Log.i("MainActivity",codeURL);

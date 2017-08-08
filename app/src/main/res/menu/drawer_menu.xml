@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+    <item
+        android:id="@+id/home_id"
+        android:title="Home"
+        android:icon="@drawable/generalho">
+    </item>
+    <item
+        android:id="@+id/home_id"
+        android:title="Home"
+        android:icon="@drawable/brochure">
+    </item>
+    <item
+        android:id="@+id/home_id"
+        android:title="Home"
+        android:icon="@drawable/earthglob">
+    </item>
+
+    </group>
+
+    <item android:title="Social">
+        <menu>
+            <item
+                android:title="Add to Group"
+                android:id="@+id/add_to_group"
+                android:icon="@drawable/businessf"
+                ></item>
+        </menu>
+    </item>
+
+</menu>
