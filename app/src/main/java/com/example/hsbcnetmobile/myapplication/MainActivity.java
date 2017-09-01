@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 getWebservice();
-                getWebservice2();
+                getWebservice3();
             }
         }, 0, period);
 
@@ -130,6 +130,19 @@ public class MainActivity extends AppCompatActivity {
         return raw.substring(StrBeginIndex,StrEndIndex);
     }
 
+    public String digestCashNet(String raw){
+
+        //int StrBeginIndex = raw.indexOf('际')+2;
+        int StrBeginIndex = raw.indexOf("2260")+6;
+        int StrEndIndex = nthIndexOfString(raw,"/fid",51);
+
+        Log.i("MainActivity",raw.substring(StrBeginIndex,StrEndIndex-1));
+        Log.i("MainActivity",String.valueOf(strToInt(raw.substring(StrBeginIndex,StrEndIndex-1))));
+        //fmt.format(strToInt(raw.substring(StrBeginIndex,StrEndIndex-1)));
+
+        return raw.substring(StrBeginIndex,StrEndIndex-1);
+    }
+
     public String getTime(){
         Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -147,6 +160,102 @@ public class MainActivity extends AppCompatActivity {
         return i;
     }
 
+    public static int nthIndexOfString(String source, String sought, int n) {
+        int index = source.indexOf(sought);
+        if (index == -1) return -1;
+
+        for (int i = 1; i < n; i++) {
+            index = source.indexOf(sought, index + 1);
+            if (index == -1) return -1;
+        }
+        return index;
+    }
+
+    public static int strToInt( String str ){
+        int i = 0;
+        int num = 0;
+        boolean isNeg = false;
+
+        //Check for negative sign; if it's there, set the isNeg flag
+        if (str.charAt(0) == '-') {
+            isNeg = true;
+            i = 1;
+        }
+
+        //Process each character of the string;
+        while( i < str.length()) {
+            num *= 10;
+            num += str.charAt(i++) - '0'; //Minus the ASCII code of '0' to get the value of the charAt(i++).
+        }
+
+        if (isNeg)
+            num = -num;
+        return num;
+    }
+
+
+    private void getWebservice3() {
+        final Request request = new Request.Builder().url("http://d1hwkbjjpz5sf.cloudfront.net/api/getAfeQuote.php?awstoken=20150617&item=354&withACode=1%20").build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        result2.setText("Failure");
+                    }
+                });
+            }
+            @Override
+            public void onResponse(Call call, final Response response) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            String Str = response.body().string();
+                            result2.setText(digestCashNet(Str));
+                            //result2.setText(digestBody(Str)+" "+getTime());
+                            //Log.i("MainActivity",price);
+                        } catch (IOException ioe){
+                            result2.setText("Error during get body");
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+
+
+    private void getWebservice2() {
+        final Request request = new Request.Builder().url("http://quotese.etnet.com.hk/content/mq3/wl_hkStockCollapse.php?code=700").build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        result2.setText("Failure");
+                    }
+                });
+            }
+            @Override
+            public void onResponse(Call call, final Response response) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            String Str = response.body().string();
+                            result2.setText(digestBody(Str)+" "+getTime());
+                            //Log.i("MainActivity",price);
+                        } catch (IOException ioe){
+                            result2.setText("Error during get body");
+                        }
+                    }
+                });
+            }
+        });
+    }
 
     private void getWebservice() {
         String rawCode = codeTxt.getText().toString();
@@ -178,36 +287,6 @@ public class MainActivity extends AppCompatActivity {
                             //Log.i("MainActivity",price);
                         } catch (IOException ioe){
                             result.setText("Error during get body");
-                        }
-                    }
-                });
-            }
-        });
-    }
-
-    private void getWebservice2() {
-        final Request request = new Request.Builder().url("http://quotese.etnet.com.hk/content/mq3/wl_hkStockCollapse.php?code=700").build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        result2.setText("Failure");
-                    }
-                });
-            }
-            @Override
-            public void onResponse(Call call, final Response response) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            String Str = response.body().string();
-                            result2.setText(digestBody(Str)+" "+getTime());
-                            //Log.i("MainActivity",price);
-                        } catch (IOException ioe){
-                            result2.setText("Error during get body");
                         }
                     }
                 });
